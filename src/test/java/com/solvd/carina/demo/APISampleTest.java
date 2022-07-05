@@ -2,11 +2,15 @@ package com.solvd.carina.demo;
 
 import java.lang.invoke.MethodHandles;
 
+import com.qaprosoft.carina.core.foundation.api.annotation.Endpoint;
+import com.qaprosoft.carina.core.foundation.api.annotation.RequestTemplatePath;
+import com.qaprosoft.carina.core.foundation.api.annotation.ResponseTemplatePath;
+import com.qaprosoft.carina.core.foundation.api.annotation.SuccessfulHttpStatus;
+import com.qaprosoft.carina.core.foundation.api.http.HttpMethodType;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
-
 import com.qaprosoft.apitools.validation.JsonCompareKeywords;
 import com.qaprosoft.carina.core.foundation.IAbstractTest;
 import com.qaprosoft.carina.core.foundation.api.http.HttpResponseStatusType;
@@ -16,10 +20,7 @@ import com.qaprosoft.carina.core.foundation.utils.tag.TestPriority;
 import com.qaprosoft.carina.core.foundation.api.APIMethodPoller;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.time.temporal.ChronoUnit;
-
-import com.solvd.carina.demo.api.DeleteUserMethod;
-import com.solvd.carina.demo.api.GetUserMethods;
-import com.solvd.carina.demo.api.PostUserMethod;
+import com.solvd.carina.demo.api.example.*;
 
 /**
  * This sample shows how create REST API tests.
@@ -36,7 +37,7 @@ public class APISampleTest implements IAbstractTest {
         LOGGER.info("test");
         setCases("4555,54545");
         PostUserMethod api = new PostUserMethod();
-        //api.setProperties("api/users/user.properties");
+        api.setProperties("api/users/user.properties");
 
         AtomicInteger counter = new AtomicInteger(0);
 
@@ -67,7 +68,7 @@ public class APISampleTest implements IAbstractTest {
         GetUserMethods getUsersMethods = new GetUserMethods();
         getUsersMethods.expectResponseStatus(HttpResponseStatusType.OK_200);
         getUsersMethods.callAPI();
-        //getUsersMethods.validateResponse(JSONCompareMode.STRICT, JsonCompareKeywords.ARRAY_CONTAINS.getKey());
+        getUsersMethods.validateResponse(JSONCompareMode.STRICT, JsonCompareKeywords.ARRAY_CONTAINS.getKey());
         getUsersMethods.validateResponseAgainstSchema("api/users/_get/rs.schema");
     }
 
